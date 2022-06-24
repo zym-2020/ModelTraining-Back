@@ -1,6 +1,7 @@
 package njnu.edu.modeltraining.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import njnu.edu.modeltraining.common.resolver.JwtTokenParser;
 import njnu.edu.modeltraining.common.result.JsonResult;
 import njnu.edu.modeltraining.common.result.ResultUtils;
 import njnu.edu.modeltraining.pojo.User;
@@ -34,4 +35,5 @@ public class UserController {
         userService.addUser(user);
         return ResultUtils.success();
     }
+
 }

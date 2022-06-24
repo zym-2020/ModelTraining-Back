@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import njnu.edu.modeltraining.common.exception.MyException;
 import njnu.edu.modeltraining.common.result.ResultEnum;
 import njnu.edu.modeltraining.common.utils.Encrypt;
+import njnu.edu.modeltraining.common.utils.JwtTokenUtil;
 import njnu.edu.modeltraining.dao.UserRepository;
 import njnu.edu.modeltraining.pojo.User;
 import njnu.edu.modeltraining.service.UserService;
@@ -37,14 +38,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User login(String account, String password) {
+    public JSONObject login(String account, String password) {
         User user = userRepository.findByAccount(account);
         if(user == null) {
             throw new MyException(ResultEnum.NO_OBJECT);
         }
         password = Encrypt.md5(password);
         if(password.equals(user.getPassword())) {
-            return user;
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("token", JwtTokenUtil.generateTokenByUser(user));
+            jsonObject.put("info", user);
+            return jsonObject;
         } else {
             throw new MyException(ResultEnum.USER_PASSWORD_NOT_MATCH);
         }

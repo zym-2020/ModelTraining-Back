@@ -26,10 +26,10 @@ import javax.servlet.http.HttpServletRequest;
 public class AuthCheckAspect {
     @Autowired
     HttpServletRequest request;
-    @Value("${jwt.tokenHead}")
-    private String tokenHead;
 
-    @Pointcut("@annotation(njnu.edu.back.common.auth.AuthCheck)")
+    private String tokenHead = "Bearer ";
+
+    @Pointcut("@annotation(njnu.edu.modeltraining.common.auth.AuthCheck)")
     public void check() {};
 
     @Around("check()")
