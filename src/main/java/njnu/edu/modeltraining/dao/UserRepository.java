@@ -4,6 +4,8 @@ import njnu.edu.modeltraining.pojo.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.text.SimpleDateFormat;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -13,5 +15,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {
+
     User findByAccount(String account);
 }
