@@ -3,6 +3,9 @@ package njnu.edu.modeltraining.pojo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import njnu.edu.modeltraining.pojo.support.Description;
+import njnu.edu.modeltraining.pojo.support.Method;
+import njnu.edu.modeltraining.pojo.support.Result;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -20,6 +23,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class ApplyHomework {
     @Id
     String id;
-    String fileId;
-    String value;
+    String teamId;
+    Integer state;
+    Description description = new Description();
+    Method method = new Method();
+    Result result = new Result();
 }

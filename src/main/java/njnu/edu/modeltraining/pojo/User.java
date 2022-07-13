@@ -20,10 +20,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class User {
     @Id
     String id;
-    String account;
-    String password;
-    String homeworkId;
-    String applyId;
-    String developId;
+    String teamId;
     String name;
 }

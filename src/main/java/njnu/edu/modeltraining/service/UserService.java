@@ -15,5 +15,5 @@ public interface UserService {
 
     void addUser(User user);
 
-    JSONObject login(String account, String password);
+    JSONObject login(String teamId, String name);
 }

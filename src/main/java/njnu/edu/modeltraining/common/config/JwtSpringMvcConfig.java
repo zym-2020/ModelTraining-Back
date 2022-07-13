@@ -1,6 +1,7 @@
 package njnu.edu.modeltraining.common.config;
 
 import njnu.edu.modeltraining.common.resolver.TokenResolver;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * @Date: 2022/06/23/16:33
  * @Description:
  */
+@Configuration
 public class JwtSpringMvcConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {

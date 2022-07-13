@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,5 +17,5 @@ import java.text.SimpleDateFormat;
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {
 
-    User findByAccount(String account);
+    List<User> findAllByTeamId(String teamId);
 }

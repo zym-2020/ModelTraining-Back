@@ -27,7 +27,7 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public JsonResult login(@RequestBody JSONObject jsonObject) {
-        return ResultUtils.success(userService.login(jsonObject.getString("account"), jsonObject.getString("password")));
+        return ResultUtils.success(userService.login(jsonObject.getString("teamId"), jsonObject.getString("name")));
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
