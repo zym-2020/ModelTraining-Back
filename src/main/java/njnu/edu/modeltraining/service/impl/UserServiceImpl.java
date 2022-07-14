@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addUser(User user) {
-        user.setName(Encrypt.md5(user.getName()));
+        user.setPassword(Encrypt.md5(user.getName()));
         userRepository.save(user);
     }
 
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
         }
         name = Encrypt.md5(name);
         for(User user : users) {
-            if(name.equals(user.getName())) {
+            if(name.equals(user.getPassword())) {
                 ApplyHomework applyHomework = applyHomeworkRepository.findByTeamId(teamId);
                 if(applyHomework == null) {
                     applyHomework = new ApplyHomework();

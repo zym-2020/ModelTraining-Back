@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import njnu.edu.modeltraining.pojo.support.result.ResultOutput;
+import njnu.edu.modeltraining.pojo.support.result.ResultValidation;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,4 +18,5 @@ import njnu.edu.modeltraining.pojo.support.result.ResultOutput;
 @AllArgsConstructor
 public class Result {
     ResultOutput resultOutput = new ResultOutput();
+    ResultValidation resultValidation = new ResultValidation();
 }
