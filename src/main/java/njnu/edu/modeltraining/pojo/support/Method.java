@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import njnu.edu.modeltraining.pojo.support.method.ComputeResource;
 import njnu.edu.modeltraining.pojo.support.method.DataResource;
 import njnu.edu.modeltraining.pojo.support.method.ModelResource;
+import njnu.edu.modeltraining.pojo.support.method.Process;
 import njnu.edu.modeltraining.pojo.support.method.Resource;
 
 import java.util.ArrayList;

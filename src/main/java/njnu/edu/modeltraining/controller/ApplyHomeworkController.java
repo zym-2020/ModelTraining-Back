@@ -5,6 +5,8 @@ import njnu.edu.modeltraining.common.resolver.JwtTokenParser;
 import njnu.edu.modeltraining.common.result.JsonResult;
 import njnu.edu.modeltraining.common.result.ResultUtils;
 import njnu.edu.modeltraining.pojo.support.Description;
+import njnu.edu.modeltraining.pojo.support.Method;
+import njnu.edu.modeltraining.pojo.support.Result;
 import njnu.edu.modeltraining.service.ApplyHomeworkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +34,20 @@ public class ApplyHomeworkController {
     @RequestMapping(value = "/saveDescription/{id}", method = RequestMethod.PATCH)
     public JsonResult saveDescription(@RequestBody Description description, @PathVariable String id) {
         applyHomeworkService.saveDescription(id, description);
+        return ResultUtils.success();
+    }
+
+    @AuthCheck
+    @RequestMapping(value = "/savaMethod/{id}", method = RequestMethod.PATCH)
+    public JsonResult savaMethod(@RequestBody Method method, @PathVariable String id) {
+        applyHomeworkService.saveMethod(id, method);
+        return ResultUtils.success();
+    }
+
+    @AuthCheck
+    @RequestMapping(value = "/saveResult/{id}", method = RequestMethod.PATCH)
+    public JsonResult saveResult(@RequestBody Result result, @PathVariable String id) {
+        applyHomeworkService.saveResult(id, result);
         return ResultUtils.success();
     }
 

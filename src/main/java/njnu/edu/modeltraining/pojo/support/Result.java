@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import njnu.edu.modeltraining.pojo.support.result.ResultOutput;
 import njnu.edu.modeltraining.pojo.support.result.ResultValidation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -18,5 +21,5 @@ import njnu.edu.modeltraining.pojo.support.result.ResultValidation;
 @AllArgsConstructor
 public class Result {
     ResultOutput resultOutput = new ResultOutput();
-    ResultValidation resultValidation = new ResultValidation();
+    List<ResultValidation> resultValidations = new ArrayList<>();
 }

@@ -5,6 +5,8 @@ import njnu.edu.modeltraining.common.result.ResultEnum;
 import njnu.edu.modeltraining.dao.ApplyHomeworkRepository;
 import njnu.edu.modeltraining.pojo.ApplyHomework;
 import njnu.edu.modeltraining.pojo.support.Description;
+import njnu.edu.modeltraining.pojo.support.Method;
+import njnu.edu.modeltraining.pojo.support.Result;
 import njnu.edu.modeltraining.service.ApplyHomeworkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +46,28 @@ public class ApplyHomeworkServiceImpl implements ApplyHomeworkService {
         }
         ApplyHomework applyHomework = optionalApplyHomework.get();
         applyHomework.setDescription(description);
+        applyHomeworkRepository.save(applyHomework);
+    }
+
+    @Override
+    public void saveMethod(String id, Method method) {
+        Optional<ApplyHomework> optionalApplyHomework = applyHomeworkRepository.findById(id);
+        if(!optionalApplyHomework.isPresent()) {
+            throw new MyException(ResultEnum.NO_OBJECT);
+        }
+        ApplyHomework applyHomework = optionalApplyHomework.get();
+        applyHomework.setMethod(method);
+        applyHomeworkRepository.save(applyHomework);
+    }
+
+    @Override
+    public void saveResult(String id, Result result) {
+        Optional<ApplyHomework> optionalApplyHomework = applyHomeworkRepository.findById(id);
+        if(!optionalApplyHomework.isPresent()) {
+            throw new MyException(ResultEnum.NO_OBJECT);
+        }
+        ApplyHomework applyHomework = optionalApplyHomework.get();
+        applyHomework.setResult(result);
         applyHomeworkRepository.save(applyHomework);
     }
 }

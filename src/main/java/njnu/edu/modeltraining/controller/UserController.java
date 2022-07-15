@@ -1,6 +1,7 @@
 package njnu.edu.modeltraining.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import njnu.edu.modeltraining.common.auth.AuthCheck;
 import njnu.edu.modeltraining.common.resolver.JwtTokenParser;
 import njnu.edu.modeltraining.common.result.JsonResult;
 import njnu.edu.modeltraining.common.result.ResultUtils;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -34,6 +38,21 @@ public class UserController {
     public JsonResult register(@RequestBody User user) {
         userService.addUser(user);
         return ResultUtils.success();
+    }
+
+    @AuthCheck
+    @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
+    public JsonResult getUserInfo(@JwtTokenParser("teamId") String teamId, @JwtTokenParser("name") String name) {
+        Map<String, String> map = new HashMap<>();
+        map.put("teamId", teamId);
+        map.put("name", name);
+        return ResultUtils.success(map);
+    }
+
+    @AuthCheck
+    @RequestMapping(value = "/getTeamInfo", method = RequestMethod.GET)
+    public JsonResult getTeamInfo(@JwtTokenParser("teamId") String teamId) {
+        return ResultUtils.success(userService.getTeamInfo(teamId));
     }
 
 }

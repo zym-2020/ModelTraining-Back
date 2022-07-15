@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -29,4 +32,5 @@ public class ResultOutput {
     String visualization = "";
     String dataHandle = "";
     String dataTransformation = "";
+    List<String> pictures = new ArrayList<>();
 }

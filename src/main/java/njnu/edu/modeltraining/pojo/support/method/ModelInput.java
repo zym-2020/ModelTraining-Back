@@ -17,5 +17,5 @@ import lombok.NoArgsConstructor;
 public class ModelInput {
     String name;
     String description;
-    String type;
+    String dataType;
 }

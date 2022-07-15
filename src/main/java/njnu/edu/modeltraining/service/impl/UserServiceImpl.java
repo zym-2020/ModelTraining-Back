@@ -13,7 +13,10 @@ import njnu.edu.modeltraining.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -59,5 +62,18 @@ public class UserServiceImpl implements UserService {
             }
         }
         throw new MyException(ResultEnum.NO_OBJECT);
+    }
+
+    @Override
+    public List<Map<String, String>> getTeamInfo(String teamId) {
+        List<User> users = userRepository.findAllByTeamId(teamId);
+        List<Map<String, String>> result = new ArrayList<>();
+        for (User user : users) {
+            Map<String, String> map = new HashMap<>();
+            map.put("name", user.getName());
+            map.put("teamId", user.getTeamId());
+            result.add(map);
+        }
+        return result;
     }
 }
