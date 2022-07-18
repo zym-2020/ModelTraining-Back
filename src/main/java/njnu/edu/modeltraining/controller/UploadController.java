@@ -49,8 +49,9 @@ public class UploadController {
     @RequestMapping(value = "/mergeFiles", method = RequestMethod.POST)
     public JsonResult mergeFile(@RequestBody JSONObject jsonObject, @JwtTokenParser("teamId") String teamId) {
         String number = jsonObject.getString("number");
+        String suffix = jsonObject.getString("suffix");
         int total = jsonObject.getIntValue("total");
-        return ResultUtils.success(uploadService.mergeFiles(teamId, number, total));
+        return ResultUtils.success(uploadService.mergeFiles(teamId, number, total, suffix));
     }
 
     @AuthCheck

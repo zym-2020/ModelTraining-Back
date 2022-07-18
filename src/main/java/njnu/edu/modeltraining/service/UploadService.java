@@ -18,7 +18,7 @@ public interface UploadService {
 
     void uploadFile(MultipartFile file, String number, String name, String teamId);
 
-    String mergeFiles(String teamId, String number, int total);
+    String mergeFiles(String teamId, String number, int total, String suffix);
 
     int checkState(String uuid);
 }

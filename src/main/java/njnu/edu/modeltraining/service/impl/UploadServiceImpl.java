@@ -124,10 +124,10 @@ public class UploadServiceImpl implements UploadService {
     }
 
     @Override
-    public String mergeFiles(String teamId, String number, int total) {
+    public String mergeFiles(String teamId, String number, int total, String suffix) {
         String uuid = UUID.randomUUID().toString();
         String from = tempAddress + teamId + "_" + number;
-        String to = homeworkAddress + teamId + "_" + number + ".docx";
+        String to = homeworkAddress + teamId + "_" + number + suffix;
         new Thread() {
             @Override
             @SneakyThrows
