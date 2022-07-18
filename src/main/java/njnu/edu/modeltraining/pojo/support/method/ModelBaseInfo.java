@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -15,9 +17,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ModelBaseInfo {
-    String conception = "";
-    String storage = "";
-    String version = "";
-    String unit = "";
-    String range = "";
+    String conception;
+    String storage;
+    String version;
+    String unit;
+    String range;
+
 }

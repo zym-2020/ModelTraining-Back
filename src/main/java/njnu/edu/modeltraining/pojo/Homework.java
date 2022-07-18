@@ -20,5 +20,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Homework {
     @Id
     String id;
-
+    String address;
+    String name;
+    String userId;
+    String number;
 }

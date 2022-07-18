@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DataActive {
-    String handle = "";
-    String conversion = "";
+    String handle;
+    String conversion;
 }

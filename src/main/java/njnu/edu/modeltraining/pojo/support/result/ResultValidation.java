@@ -3,7 +3,6 @@ package njnu.edu.modeltraining.pojo.support.result;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import njnu.edu.modeltraining.pojo.support.method.ProcessResource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,5 +25,4 @@ public class ResultValidation {
     String reference = "";
     String other = "";
     List<String> pictures = new ArrayList<>();
-    List<ProcessResource> processResources = new ArrayList<>();
 }

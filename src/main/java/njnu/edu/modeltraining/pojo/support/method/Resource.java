@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -15,7 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Resource {
-    ModelResource modelResource = new ModelResource();
-    DataResource dataResource = new DataResource();
+    List<ModelResource> modelResources = new ArrayList<>();
+    List<DataResource> dataResources = new ArrayList<>();
     ComputeResource computeResource = new ComputeResource();
 }

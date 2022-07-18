@@ -1,8 +1,12 @@
 package njnu.edu.modeltraining.service.impl;
 
+import lombok.SneakyThrows;
 import njnu.edu.modeltraining.common.exception.MyException;
 import njnu.edu.modeltraining.common.result.ResultEnum;
+import njnu.edu.modeltraining.common.utils.LocalUpload;
+import njnu.edu.modeltraining.service.RedisService;
 import njnu.edu.modeltraining.service.UploadService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +31,15 @@ public class UploadServiceImpl implements UploadService {
 
     @Value("${uploadAddress}")
     String uploadAddress;
+
+    @Value("${tempAddress}")
+    String tempAddress;
+
+    @Value("${homeworkAddress}")
+    String homeworkAddress;
+
+    @Autowired
+    RedisService redisService;
 
     @Override
     public String uploadImg(MultipartFile file) {
@@ -101,6 +114,47 @@ public class UploadServiceImpl implements UploadService {
                 e.printStackTrace();
                 throw new MyException(ResultEnum.DEFAULT_EXCEPTION);
             }
+        }
+    }
+
+    @Override
+    public void uploadFile(MultipartFile file, String number, String name, String teamId) {
+        String dir = tempAddress + teamId + "_" + number;
+        LocalUpload.UploadFile(file, name, dir);
+    }
+
+    @Override
+    public String mergeFiles(String teamId, String number, int total) {
+        String uuid = UUID.randomUUID().toString();
+        String from = tempAddress + teamId + "_" + number;
+        String to = homeworkAddress + teamId + "_" + number + ".docx";
+        new Thread() {
+            @Override
+            @SneakyThrows
+            public void run() {
+                redisService.set(uuid, 0, 60*3l);
+                int state = LocalUpload.merge(from, to, total);
+                if(state == 1) {
+                    redisService.set(uuid, 1, 60*3l);
+                } else {
+                    redisService.set(uuid, -1, 60*3l);
+                }
+                LocalUpload.deleteFolder(from);
+            }
+        }.start();
+        return uuid;
+    }
+
+    @Override
+    public int checkState(String uuid) {
+        Integer state = (Integer) redisService.get(uuid);
+        if(state == null) {
+            return -1;
+        } else {
+            if(state == 1 || state == -1) {
+                redisService.del(uuid);
+            }
+            return state;
         }
     }
 }

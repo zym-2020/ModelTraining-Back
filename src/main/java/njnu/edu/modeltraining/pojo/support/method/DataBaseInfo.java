@@ -15,15 +15,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DataBaseInfo {
-    String name = "";
-    String description = "";
-    String location = "";
-    String format = "";
-    String version = "";
-    String produceTime = "";
-    String updateTime = "";
-    String unit = "";
-    String precision = "";
-    String spaceTimeScale = "";
-    String identifier = "";
+    String name;
+    String description;
+    String location;
+    String format;
+    String version;
+    String produceTime;
+    String updateTime;
+    String unit;
+    String precision;
+    String spaceTimeScale;
+    String identifier;
 }

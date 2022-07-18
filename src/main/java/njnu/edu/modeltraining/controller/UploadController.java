@@ -1,5 +1,8 @@
 package njnu.edu.modeltraining.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import njnu.edu.modeltraining.common.auth.AuthCheck;
+import njnu.edu.modeltraining.common.resolver.JwtTokenParser;
 import njnu.edu.modeltraining.common.result.JsonResult;
 import njnu.edu.modeltraining.common.result.ResultUtils;
 import njnu.edu.modeltraining.service.UploadService;
@@ -33,5 +36,26 @@ public class UploadController {
     @RequestMapping(value = "/getImg/{fileName}", method = RequestMethod.GET)
     public void getImg(@PathVariable String fileName, HttpServletResponse response) {
         uploadService.getImg(fileName, response);
+    }
+
+    @AuthCheck
+    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+    public JsonResult uploadFile(@RequestParam MultipartFile file, @RequestParam String number, @RequestParam String name, @JwtTokenParser("teamId") String teamId) {
+        uploadService.uploadFile(file, number, name, teamId);
+        return ResultUtils.success();
+    }
+
+    @AuthCheck
+    @RequestMapping(value = "/mergeFiles", method = RequestMethod.POST)
+    public JsonResult mergeFile(@RequestBody JSONObject jsonObject, @JwtTokenParser("teamId") String teamId) {
+        String number = jsonObject.getString("number");
+        int total = jsonObject.getIntValue("total");
+        return ResultUtils.success(uploadService.mergeFiles(teamId, number, total));
+    }
+
+    @AuthCheck
+    @RequestMapping(value = "/checkState/{uuid}", method = RequestMethod.GET)
+    public JsonResult checkState(@PathVariable String uuid) {
+        return ResultUtils.success(uploadService.checkState(uuid));
     }
 }

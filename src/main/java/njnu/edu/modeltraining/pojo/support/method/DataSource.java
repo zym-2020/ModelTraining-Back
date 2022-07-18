@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DataSource {
-    String publish = "";
-    String references = "";
+    String publish;
+    String references;
 }

@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -15,11 +17,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ModelMetaData {
-    String hypothesis = "";
-    String algorithm = "";
-    String input = "";
-    String output = "";
-    String parameter = "";
-    String iterate = "";
-    String unit = "";
+    String hypothesis;
+    String algorithm;
+    List<ModelInput> modelInputs;
+    List<ModelOutput> modelOutputs;
+    String parameter;
+    String iterate;
+    String unit;
 }

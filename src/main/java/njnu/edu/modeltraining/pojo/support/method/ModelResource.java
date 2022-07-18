@@ -15,7 +15,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ModelResource {
-    ModelBaseInfo modelBaseInfo = new ModelBaseInfo();
-    ModelMetaData modelMetaData = new ModelMetaData();
-    ModelSource modelSource = new ModelSource();
+    String modelId;
+    ModelBaseInfo modelBaseInfo;
+    ModelMetaData modelMetaData;
+    ModelSource modelSource;
 }

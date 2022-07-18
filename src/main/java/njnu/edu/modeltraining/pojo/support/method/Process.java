@@ -24,5 +24,5 @@ public class Process {
     String reference;
     String other;
     List<String> pictures;
-    List<ProcessResource> processResources;
+    List<String> processResources;
 }

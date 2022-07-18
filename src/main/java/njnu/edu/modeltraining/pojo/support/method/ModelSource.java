@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ModelSource {
-    String references = "";
-    String publication = "";
-    String develop = "";
+    String references;
+    String publication;
+    String develop;
 }

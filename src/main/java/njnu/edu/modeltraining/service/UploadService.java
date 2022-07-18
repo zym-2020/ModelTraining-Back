@@ -15,4 +15,10 @@ public interface UploadService {
     String uploadImg(MultipartFile file);
 
     void getImg(String fileName, HttpServletResponse response);
+
+    void uploadFile(MultipartFile file, String number, String name, String teamId);
+
+    String mergeFiles(String teamId, String number, int total);
+
+    int checkState(String uuid);
 }

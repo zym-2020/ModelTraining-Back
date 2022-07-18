@@ -15,7 +15,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DataResource {
-    DataBaseInfo dataBaseInfo = new DataBaseInfo();
-    DataActive dataActive = new DataActive();
-    DataSource dataSource = new DataSource();
+    String dataId;
+    DataBaseInfo dataBaseInfo;
+    DataActive dataActive;
+    DataSource dataSource;
 }
