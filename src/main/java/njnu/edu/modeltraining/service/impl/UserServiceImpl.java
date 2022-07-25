@@ -35,33 +35,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addUser(User user) {
-        user.setPassword(Encrypt.md5(user.getName()));
         userRepository.save(user);
     }
 
     @Override
-    public JSONObject login(String teamId, String name) {
-        List<User> users = userRepository.findAllByTeamId(teamId);
-        if(users == null) {
+    public JSONObject login(String email, String name) {
+        User user = userRepository.findByEmail(email);
+        if(user == null) {
             throw new MyException(ResultEnum.NO_OBJECT);
         }
-        name = Encrypt.md5(name);
-        for(User user : users) {
-            if(name.equals(user.getPassword())) {
-                ApplyHomework applyHomework = applyHomeworkRepository.findByTeamId(teamId);
-                if(applyHomework == null) {
-                    applyHomework = new ApplyHomework();
-                    applyHomework.setState(0);
-                    applyHomework.setTeamId(teamId);
-                    applyHomeworkRepository.save(applyHomework);
-                }
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("token", JwtTokenUtil.generateTokenByUser(user));
-                jsonObject.put("info", user);
-                return jsonObject;
-            }
+        if(user.getName().equals(name)) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("token", JwtTokenUtil.generateTokenByUser(user));
+            jsonObject.put("info", user);
+            return jsonObject;
+        } else {
+            throw new MyException(ResultEnum.USER_PASSWORD_NOT_MATCH);
         }
-        throw new MyException(ResultEnum.NO_OBJECT);
     }
 
     @Override

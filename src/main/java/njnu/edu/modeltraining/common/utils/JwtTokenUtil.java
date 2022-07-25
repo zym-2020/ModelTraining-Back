@@ -106,8 +106,8 @@ public class JwtTokenUtil {
         Map<String, Object> claims = new HashMap<>();
         claims.put("id", user.getId());
         claims.put("name", user.getName());
-        claims.put("teamId", user.getTeamId());
-
+        claims.put("email", user.getEmail());
+        claims.put("memberId", user.getMemberId());
         return generateToken(claims);
 
     }
@@ -139,7 +139,8 @@ public class JwtTokenUtil {
         Map<String, Object> map = new HashMap<>();
         map.put("id", claims.get("id"));
         map.put("name", claims.get("name"));
-        map.put("teamId", claims.get("teamId"));
+        map.put("email", claims.get("email"));
+        map.put("memberId", claims.get("memberId"));
         return generateToken(map);
     }
 }

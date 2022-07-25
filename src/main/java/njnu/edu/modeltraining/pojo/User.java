@@ -21,6 +21,7 @@ public class User {
     @Id
     String id;
     String teamId;
-    String password;
     String name;
+    String email;
+    String memberId;
 }

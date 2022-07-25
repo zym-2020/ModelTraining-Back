@@ -18,7 +18,7 @@ public interface UserService {
 
     void addUser(User user);
 
-    JSONObject login(String teamId, String name);
+    JSONObject login(String email, String name);
 
     List<Map<String, String>> getTeamInfo(String teamId);
 }
