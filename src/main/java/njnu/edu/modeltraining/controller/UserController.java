@@ -42,10 +42,12 @@ public class UserController {
 
     @AuthCheck
     @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
-    public JsonResult getUserInfo(@JwtTokenParser("teamId") String teamId, @JwtTokenParser("name") String name) {
+    public JsonResult getUserInfo(@JwtTokenParser("teamId") String teamId, @JwtTokenParser("name") String name, @JwtTokenParser("memberId") String memberId, @JwtTokenParser("email") String email) {
         Map<String, String> map = new HashMap<>();
         map.put("teamId", teamId);
         map.put("name", name);
+        map.put("memberId", memberId);
+        map.put("email", email);
         return ResultUtils.success(map);
     }
 

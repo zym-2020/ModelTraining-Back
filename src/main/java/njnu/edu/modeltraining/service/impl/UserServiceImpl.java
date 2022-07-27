@@ -9,6 +9,7 @@ import njnu.edu.modeltraining.dao.ApplyHomeworkRepository;
 import njnu.edu.modeltraining.dao.UserRepository;
 import njnu.edu.modeltraining.pojo.ApplyHomework;
 import njnu.edu.modeltraining.pojo.User;
+import njnu.edu.modeltraining.service.RedisService;
 import njnu.edu.modeltraining.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     ApplyHomeworkRepository applyHomeworkRepository;
 
+    @Autowired
+    RedisService redisService;
+
     @Override
     public void addUser(User user) {
         userRepository.save(user);
@@ -40,10 +44,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public JSONObject login(String email, String name) {
-        User user = userRepository.findByEmail(email);
+        User user = (User) redisService.get(email);
         if(user == null) {
-            throw new MyException(ResultEnum.NO_OBJECT);
+            user = userRepository.findByEmail(email);
+            if(user == null) {
+                throw new MyException(ResultEnum.NO_OBJECT);
+            }
         }
+        redisService.set(email, user, 60*24*7l);
+
         if(user.getName().equals(name)) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("token", JwtTokenUtil.generateTokenByUser(user));

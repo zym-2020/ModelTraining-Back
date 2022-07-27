@@ -60,10 +60,9 @@ public class HomeworkController {
         return ResultUtils.success(homeworkService.getHomework(memberId));
     }
 
-    @RequestMapping(value = "/download/{number}", method = RequestMethod.GET)
-    public JsonResult download(@PathVariable String number, @JwtTokenParser("memberId") String memberId, HttpServletResponse response) {
+    @RequestMapping(value = "/download/{memberId}/{number}", method = RequestMethod.GET)
+    public void download(@PathVariable String number, @PathVariable String memberId, HttpServletResponse response) {
         homeworkService.download(memberId, number, response);
-        return ResultUtils.success();
     }
 
     @RequestMapping(value = "/removeFile/{number}", method = RequestMethod.DELETE)

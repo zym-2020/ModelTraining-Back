@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -56,6 +57,7 @@ public class HomeworkServiceImpl implements HomeworkService {
         String suffix = name.substring(name.lastIndexOf(".") + 1);
         String from = tempAddress + memberId + "_" + number;
         String to = homeworkAddress + memberId + "_" + number + "." + suffix;
+        LocalUpload.deleteFolder(to);
         new Thread() {
             @Override
             @SneakyThrows
@@ -115,6 +117,7 @@ public class HomeworkServiceImpl implements HomeworkService {
         if(homework == null) {
             throw new MyException(ResultEnum.NO_OBJECT);
         }
+        String name = homework.getName();
         String fileName = homework.getFileName();
         File file = new File(homeworkAddress + fileName);
         if(!file.exists()) {
@@ -123,12 +126,16 @@ public class HomeworkServiceImpl implements HomeworkService {
         InputStream in = null;
         ServletOutputStream sos = null;
         try {
+            response.setContentType("application/octet-stream");
+            response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(name, "UTF-8"));
+            response.addHeader("Content-Length", "" + file.length());
             in = new FileInputStream(file);
             sos = response.getOutputStream();
             byte[] bytes = new byte[1024];
             while((in.read(bytes)) > -1) {
                 sos.write(bytes);
             }
+            sos.flush();
             in.close();
         } catch (Exception e) {
             e.printStackTrace();
