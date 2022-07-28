@@ -58,11 +58,16 @@ public class HomeworkServiceImpl implements HomeworkService {
         String from = tempAddress + memberId + "_" + number;
         String to = homeworkAddress + memberId + "_" + number + "." + suffix;
         LocalUpload.deleteFolder(to);
+        redisService.set(uuid, 0, 60l);
         new Thread() {
             @Override
             @SneakyThrows
             public void run() {
-                redisService.set(uuid, 0, 60l);
+                File file = new File(to);
+                while (file.exists()) {
+                    System.out.println("hahah");
+                    Thread.sleep(300);
+                }
                 int state = LocalUpload.merge(from, to, total);
                 if(state == 1) {
                     redisService.set(uuid, 1, 60l);
@@ -89,12 +94,11 @@ public class HomeworkServiceImpl implements HomeworkService {
         Integer state = (Integer) redisService.get(uuid);
         if(state == null) {
             return -1;
-        } else {
-            if(state == 1 || state == -1) {
-                redisService.del(uuid);
-            }
-            return state;
         }
+        if(state == 1 || state == -1) {
+            redisService.del(uuid);
+        }
+        return state;
     }
 
     @Override

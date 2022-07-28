@@ -40,6 +40,7 @@ public class UserController {
         return ResultUtils.success();
     }
 
+
     @AuthCheck
     @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
     public JsonResult getUserInfo(@JwtTokenParser("teamId") String teamId, @JwtTokenParser("name") String name, @JwtTokenParser("memberId") String memberId, @JwtTokenParser("email") String email) {
