@@ -24,4 +24,5 @@ public class User {
     String name;
     String email;
     String memberId;
+    Integer finishedCount;
 }

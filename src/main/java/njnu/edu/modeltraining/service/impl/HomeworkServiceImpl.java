@@ -5,7 +5,9 @@ import njnu.edu.modeltraining.common.exception.MyException;
 import njnu.edu.modeltraining.common.result.ResultEnum;
 import njnu.edu.modeltraining.common.utils.LocalUpload;
 import njnu.edu.modeltraining.dao.HomeworkRepository;
+import njnu.edu.modeltraining.dao.UserRepository;
 import njnu.edu.modeltraining.pojo.Homework;
+import njnu.edu.modeltraining.pojo.User;
 import njnu.edu.modeltraining.service.HomeworkService;
 import njnu.edu.modeltraining.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,9 @@ public class HomeworkServiceImpl implements HomeworkService {
 
     @Autowired
     HomeworkRepository homeworkRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
     RedisService redisService;
@@ -180,6 +185,9 @@ public class HomeworkServiceImpl implements HomeworkService {
             throw new MyException(-99, "提交为空");
         }
         homework.setState(1);
+        User user = userRepository.findByMemberId(memberId);
+        user.setFinishedCount(user.getFinishedCount() + 1);
+        userRepository.save(user);
         homeworkRepository.save(homework);
     }
 }
