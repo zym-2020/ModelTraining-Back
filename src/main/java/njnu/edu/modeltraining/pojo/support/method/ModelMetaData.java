@@ -18,10 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 public class ModelMetaData {
     String hypothesis;
-    String algorithm;
     List<ModelInput> modelInputs;
     List<ModelOutput> modelOutputs;
-    String parameter;
-    String iterate;
-    String unit;
+    List<Parameter>  parameters;
+    Iterate iterate;
 }

@@ -20,5 +20,5 @@ import java.util.List;
 public class Resource {
     List<ModelResource> modelResources = new ArrayList<>();
     List<DataResource> dataResources = new ArrayList<>();
-    ComputeResource computeResource = new ComputeResource();
+    List<ComputeResource> computeResources = new ArrayList<>();
 }

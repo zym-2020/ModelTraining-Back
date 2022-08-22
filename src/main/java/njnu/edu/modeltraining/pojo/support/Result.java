@@ -3,6 +3,8 @@ package njnu.edu.modeltraining.pojo.support;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import njnu.edu.modeltraining.pojo.support.result.Conclusion;
+import njnu.edu.modeltraining.pojo.support.result.Other;
 import njnu.edu.modeltraining.pojo.support.result.ResultOutput;
 import njnu.edu.modeltraining.pojo.support.result.ResultValidation;
 
@@ -20,6 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Result {
-    ResultOutput resultOutput = new ResultOutput();
-    List<ResultValidation> resultValidations = new ArrayList<>();
+    ResultValidation resultValidation = new ResultValidation();
+    ResultValidation resultVisualization  = new ResultValidation();
+    Conclusion conclusion = new Conclusion();
 }

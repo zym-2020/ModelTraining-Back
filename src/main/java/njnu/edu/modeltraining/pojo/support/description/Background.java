@@ -20,5 +20,6 @@ import java.util.List;
 public class Background {
     String text = "";
     List<String> pictures = new ArrayList<>();
-    List<String> videos = new ArrayList<>();
+    Video video = new Video();
+    List<String> references = new ArrayList<>();
 }

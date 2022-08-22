@@ -1,24 +1,18 @@
-package njnu.edu.modeltraining.pojo.support.description;
+package njnu.edu.modeltraining.pojo.support.result;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import njnu.edu.modeltraining.pojo.support.description.Video;
 
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created with IntelliJ IDEA.
- *
- * @Author: Yiming
- * @Date: 2022/07/13/14:12
- * @Description:
- */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Purpose {
+public class Conclusion {
     String text = "";
+    String paper = "";
     List<String> pictures = new ArrayList<>();
     Video video = new Video();
 }

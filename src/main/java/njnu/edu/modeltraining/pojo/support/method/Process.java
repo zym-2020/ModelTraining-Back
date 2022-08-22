@@ -3,7 +3,9 @@ package njnu.edu.modeltraining.pojo.support.method;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import njnu.edu.modeltraining.pojo.support.description.Video;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,8 +23,10 @@ public class Process {
     String description;
     String stepType;
     String operateType;
-    String reference;
+    List<String> references;
     String other;
     List<String> pictures;
-    List<String> processResources;
+    Video video = new Video();
+    ModelResource modelResource = new ModelResource();
+    List<DataResource> dataResources = new ArrayList<>();
 }

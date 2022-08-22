@@ -59,4 +59,16 @@ public class UploadController {
     public JsonResult checkState(@PathVariable String uuid) {
         return ResultUtils.success(uploadService.checkState(uuid));
     }
+
+    @CrossOrigin
+    @RequestMapping(value = "/uploadVideo", method = RequestMethod.POST)
+    public JsonResult uploadVideo(@RequestParam MultipartFile file) {
+        return ResultUtils.success(uploadService.uploadVideo(file));
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/getVideo/{fileName}", method = RequestMethod.GET)
+    public void getVideo(@PathVariable String fileName, HttpServletResponse response) {
+        uploadService.getVideo(fileName, response);
+    }
 }

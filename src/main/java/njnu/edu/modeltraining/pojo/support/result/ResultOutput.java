@@ -3,6 +3,7 @@ package njnu.edu.modeltraining.pojo.support.result;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import njnu.edu.modeltraining.pojo.support.method.Spacetimescale;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,17 +21,8 @@ import java.util.List;
 public class ResultOutput {
     String name = "";
     String description = "";
-    String location = "";
-    String format = "";
-    String version = "";
     String time = "";
-    String updateTime = "";
-    String unit = "";
-    String precision = "";
-    String spaceTimeScale = "";
-    String identifier = "";
-    String visualization = "";
-    String dataHandle = "";
-    String dataTransformation = "";
-    List<String> pictures = new ArrayList<>();
+    String storage = "";
+    String format = "";
+    String isUpload = "false";
 }

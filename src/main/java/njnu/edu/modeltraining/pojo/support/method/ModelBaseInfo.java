@@ -17,10 +17,24 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ModelBaseInfo {
-    String conception;
-    String storage;
-    String version;
-    String unit;
-    String range;
-
+    String name="";
+    String content="";
+    String description="";
+    String version="";
+    String type="";
+    String softDemand="";
+    String softVersion="";
+    String storage="";
+    String serverStorage="";
+    String algorithm="";
+    String codeContent="";
+    String language="";
+    String dependent="";
+    RefSystemTime refSystemTime = new RefSystemTime();
+    RefSystemSpace refSystemSpace = new RefSystemSpace();
+    String producteTime="";
+    String updateTime="";
+    String other="";
+    String isCodeUpload = "false";
+    String isUpload = "false";
 }

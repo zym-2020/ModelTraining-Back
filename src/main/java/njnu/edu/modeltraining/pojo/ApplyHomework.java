@@ -3,11 +3,12 @@ package njnu.edu.modeltraining.pojo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import njnu.edu.modeltraining.pojo.support.Description;
-import njnu.edu.modeltraining.pojo.support.Method;
-import njnu.edu.modeltraining.pojo.support.Result;
+import njnu.edu.modeltraining.pojo.support.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,4 +29,6 @@ public class ApplyHomework {
     Description description = new Description();
     Method method = new Method();
     Result result = new Result();
+    Researcher researcher = new Researcher();
+    List<Summary> summary = new ArrayList<>();
 }

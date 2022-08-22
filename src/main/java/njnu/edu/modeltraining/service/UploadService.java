@@ -21,4 +21,8 @@ public interface UploadService {
     String mergeFiles(String teamId, String number, int total, String suffix);
 
     int checkState(String uuid);
+    String uploadVideo(MultipartFile file);
+    void getVideo(String fileName, HttpServletResponse response);
+
+
 }

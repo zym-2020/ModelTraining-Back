@@ -4,21 +4,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 /**
  * Created with IntelliJ IDEA.
  *
  * @Author: Yiming
- * @Date: 2022/07/13/14:44
+ * @Date: 2022/07/14/11:21
  * @Description:
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DataSource {
-    String publish;
-    List<String> references;
-    String UId;
-    String develop;
+public class Parameter {
+    String name;
+    String description;
+    String unit;
+    String defaultValue;
+    String format;
+    DataResource dataResource;
 }

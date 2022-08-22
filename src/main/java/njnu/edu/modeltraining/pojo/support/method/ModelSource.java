@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -15,7 +17,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ModelSource {
-    String references;
+    List<String> references;
     String publication;
     String develop;
+    String UId;
+    String license;
 }

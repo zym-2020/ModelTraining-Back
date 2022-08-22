@@ -1,6 +1,7 @@
 package njnu.edu.modeltraining.dao;
 
 import njnu.edu.modeltraining.pojo.ApplyHomework;
+import njnu.edu.modeltraining.pojo.support.method.ModelResource;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

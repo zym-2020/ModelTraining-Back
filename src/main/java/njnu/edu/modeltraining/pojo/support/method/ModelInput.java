@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -17,5 +20,8 @@ import lombok.NoArgsConstructor;
 public class ModelInput {
     String name;
     String description;
-    String dataType;
+    String unit;
+    String defaultValue;
+    String format;
+    DataResource dataResource;
 }

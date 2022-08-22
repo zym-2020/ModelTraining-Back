@@ -28,7 +28,8 @@ public class LocalUpload {
         FileOutputStream outs = null;
         try {
             ins = multipartFile.getInputStream();
-            outs = new FileOutputStream(dir + "\\" + name);
+//            outs = new FileOutputStream(dir + "\\" + name);
+            outs = new FileOutputStream(dir + "/" + name);
             int len;
             byte[] bytes = new byte[1024];
             while((len = ins.read(bytes)) != -1) {
@@ -64,7 +65,8 @@ public class LocalUpload {
             outChannel = out.getChannel();
             long start = 0;
             for (int i = 0; i < total; i++) {
-                File file = new File(from + "\\" + i);
+//                File file = new File(from + "\\" + i);
+                File file = new File(from + "/" + i);
                 in = new FileInputStream(file);
                 inChannel = in.getChannel();
                 outChannel.transferFrom(inChannel, start, file.length());

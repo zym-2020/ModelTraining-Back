@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -17,13 +19,14 @@ import lombok.NoArgsConstructor;
 public class DataBaseInfo {
     String name;
     String description;
+    String type;
     String location;
     String format;
+    String parameter;
     String version;
     String produceTime;
     String updateTime;
-    String unit;
-    String precision;
-    String spaceTimeScale;
-    String identifier;
+    Time time;
+    Space space;
+    String isUpload = "false";
 }
