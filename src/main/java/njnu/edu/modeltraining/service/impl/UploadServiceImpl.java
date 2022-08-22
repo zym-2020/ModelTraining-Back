@@ -134,12 +134,12 @@ public class UploadServiceImpl implements UploadService {
             @Override
             @SneakyThrows
             public void run() {
-                redisService.set(uuid, 0, 60*3l);
+                redisService.set(uuid, 0, 60l);
                 int state = LocalUpload.merge(from, to, total);
                 if(state == 1) {
-                    redisService.set(uuid, 1, 60*3l);
+                    redisService.set(uuid, 1, 60l);
                 } else {
-                    redisService.set(uuid, -1, 60*3l);
+                    redisService.set(uuid, -1, 60l);
                 }
                 LocalUpload.deleteFolder(from);
             }

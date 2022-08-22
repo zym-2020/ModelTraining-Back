@@ -31,7 +31,7 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public JsonResult login(@RequestBody JSONObject jsonObject) {
-        return ResultUtils.success(userService.login(jsonObject.getString("teamId"), jsonObject.getString("name")));
+        return ResultUtils.success(userService.login(jsonObject.getString("email"), jsonObject.getString("name")));
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -40,12 +40,15 @@ public class UserController {
         return ResultUtils.success();
     }
 
+
     @AuthCheck
     @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
-    public JsonResult getUserInfo(@JwtTokenParser("teamId") String teamId, @JwtTokenParser("name") String name) {
+    public JsonResult getUserInfo(@JwtTokenParser("teamId") String teamId, @JwtTokenParser("name") String name, @JwtTokenParser("memberId") String memberId, @JwtTokenParser("email") String email) {
         Map<String, String> map = new HashMap<>();
         map.put("teamId", teamId);
         map.put("name", name);
+        map.put("memberId", memberId);
+        map.put("email", email);
         return ResultUtils.success(map);
     }
 

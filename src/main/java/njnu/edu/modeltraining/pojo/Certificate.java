@@ -10,19 +10,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * Created with IntelliJ IDEA.
  *
  * @Author: Yiming
- * @Date: 2022/06/23/15:24
+ * @Date: 2022/08/01/14:54
  * @Description:
  */
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "users")
-public class User {
+@NoArgsConstructor
+@Document(collection = "certificate")
+public class Certificate {
     @Id
     String id;
-    String teamId;
-    String name;
-    String email;
-    String memberId;
-    Integer finishedCount;
+    String userId;
+    String type;
+    String number;
 }
