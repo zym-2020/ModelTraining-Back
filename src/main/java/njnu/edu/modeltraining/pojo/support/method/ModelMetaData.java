@@ -17,9 +17,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ModelMetaData {
-    String hypothesis;
     List<ModelInput> modelInputs;
     List<ModelOutput> modelOutputs;
     List<Parameter>  parameters;
-    Iterate iterate;
+    String upperboundary = "";
+    String lowerboundary = "";
+
 }

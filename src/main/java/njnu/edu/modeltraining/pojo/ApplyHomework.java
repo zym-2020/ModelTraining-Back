@@ -24,6 +24,7 @@ import java.util.List;
 public class ApplyHomework {
     @Id
     String id;
+    Topic topic;
     String teamId;
     Integer state;
     Description description = new Description();
@@ -31,4 +32,7 @@ public class ApplyHomework {
     Result result = new Result();
     Researcher researcher = new Researcher();
     List<Summary> summary = new ArrayList<>();
+    Integer score = 0;
+    Boolean ifSelect = false;
+    String note;
 }

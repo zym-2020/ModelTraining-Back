@@ -5,12 +5,11 @@ import njnu.edu.modeltraining.common.exception.MyException;
 import njnu.edu.modeltraining.common.result.ResultEnum;
 import njnu.edu.modeltraining.common.utils.LocalUpload;
 import njnu.edu.modeltraining.dao.ApplyHomeworkRepository;
+import njnu.edu.modeltraining.dao.UserRepository;
 import njnu.edu.modeltraining.pojo.ApplyHomework;
 import njnu.edu.modeltraining.pojo.Homework;
-import njnu.edu.modeltraining.pojo.support.Description;
-import njnu.edu.modeltraining.pojo.support.Researcher;
-import njnu.edu.modeltraining.pojo.support.Result;
-import njnu.edu.modeltraining.pojo.support.Summary;
+import njnu.edu.modeltraining.pojo.User;
+import njnu.edu.modeltraining.pojo.support.*;
 import njnu.edu.modeltraining.pojo.support.description.Video;
 import njnu.edu.modeltraining.pojo.support.method.ComputeResource;
 import njnu.edu.modeltraining.pojo.support.method.DataResource;
@@ -24,7 +23,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -51,9 +55,28 @@ public class ApplyHomeworkServiceImpl implements ApplyHomeworkService {
 
     @Autowired
     ApplyHomeworkRepository applyHomeworkRepository;
-
+    @Autowired
+    UserRepository userRepository;
     @Override
     public ApplyHomework getByTeamId(String teamId) {
+        ApplyHomework applyHomework = applyHomeworkRepository.findByTeamId(teamId);
+        if(applyHomework == null) {
+            applyHomework = new ApplyHomework();
+            applyHomework.setTeamId(teamId);
+            applyHomework.setState(0);
+            applyHomeworkRepository.save(applyHomework);
+        }
+        return applyHomework;
+    }
+
+    @Override
+    public ApplyHomework getById(String id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if(!optionalUser.isPresent()) {
+            throw new MyException(ResultEnum.NO_OBJECT);
+        }
+        User user = optionalUser.get();
+        String teamId = user.getTeamId();
         ApplyHomework applyHomework = applyHomeworkRepository.findByTeamId(teamId);
         if(applyHomework == null) {
             applyHomework = new ApplyHomework();
@@ -598,7 +621,7 @@ public class ApplyHomeworkServiceImpl implements ApplyHomeworkService {
         applyHomeworkRepository.save(applyHomework);
     }
     @Override
-    public String mergeProcessFiles(String id,Process process, String uuid, int total, String name) {
+    public String mergeProcessFiles(String id, String uuid, int total, String name) {
         String uid = UUID.randomUUID().toString();
         String suffix = name.substring(name.lastIndexOf(".") + 1);
         String from = tempAddress + uuid;
@@ -615,22 +638,6 @@ public class ApplyHomeworkServiceImpl implements ApplyHomeworkService {
                 int state = LocalUpload.merge(from, to, total);
                 if(state == 1) {
                     redisService.set(uid, 1, 60l);
-                    Optional<ApplyHomework> optionalApplyHomework = applyHomeworkRepository.findById(id);
-                    if(!optionalApplyHomework.isPresent()) {
-                        throw new MyException(ResultEnum.NO_OBJECT);
-                    }
-                    ApplyHomework applyHomework = optionalApplyHomework.get();
-                    List<Process> processes = applyHomework.getMethod().getProcesses();
-                    int i;
-                    for( i=0;i<processes.size();++i)
-                    {
-                        if(processes.get(i).equals(process))
-                        {
-                            processes.get(i).setVideo(new Video(uuid,name));
-                        }
-                    }
-                applyHomeworkRepository.save(applyHomework);
-
                 } else {
                     redisService.set(uid, -1, 60l);
                 }
@@ -664,6 +671,24 @@ public class ApplyHomeworkServiceImpl implements ApplyHomeworkService {
             }
         }
 
+    }
+    @Override
+    public void removeTempVideoFile(String id, String uuid) {
+        File file = new File(videoAddress + uuid + ".mp4");
+        if(file.exists()) {
+            LocalUpload.deleteFolder(videoAddress + uuid +".mp4");
+        }
+    }
+
+    @Override
+    public void saveTopic(String id, Topic topic) {
+        Optional<ApplyHomework> optionalApplyHomework = applyHomeworkRepository.findById(id);
+        if(!optionalApplyHomework.isPresent()) {
+            throw new MyException(ResultEnum.NO_OBJECT);
+        }
+        ApplyHomework applyHomework = optionalApplyHomework.get();
+        applyHomework.setTopic(topic);
+        applyHomeworkRepository.save(applyHomework);
     }
 
     @Override
@@ -733,6 +758,43 @@ public class ApplyHomeworkServiceImpl implements ApplyHomeworkService {
             }
         }
         applyHomeworkRepository.save(applyHomework);
+    }
+
+    @Override
+    public void download(String name,String id, HttpServletResponse response) {
+        String mName = name;
+        String fileName = id + ".mp4";
+        File file = new File(videoAddress + fileName );
+        if(!file.exists()) {
+            throw new MyException(ResultEnum.NO_OBJECT);
+        }
+        InputStream in = null;
+        ServletOutputStream sos = null;
+        try {
+            response.setContentType("application/octet-stream");
+            response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(mName, "UTF-8"));
+            response.addHeader("Content-Length", "" + file.length());
+            in = new FileInputStream(file);
+            sos = response.getOutputStream();
+            byte[] bytes = new byte[1024];
+            while((in.read(bytes)) > -1) {
+                sos.write(bytes);
+            }
+            sos.flush();
+            in.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new MyException(ResultEnum.DEFAULT_EXCEPTION);
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new MyException(ResultEnum.DEFAULT_EXCEPTION);
+            }
+        }
     }
 
     @Override

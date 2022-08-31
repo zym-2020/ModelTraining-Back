@@ -29,4 +29,5 @@ public class Process {
     Video video = new Video();
     ModelResource modelResource = new ModelResource();
     List<DataResource> dataResources = new ArrayList<>();
+    Integer processScore;
 }

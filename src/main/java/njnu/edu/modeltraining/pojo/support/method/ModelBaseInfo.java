@@ -33,6 +33,8 @@ public class ModelBaseInfo {
     RefSystemTime refSystemTime = new RefSystemTime();
     RefSystemSpace refSystemSpace = new RefSystemSpace();
     String producteTime="";
+    String hypothesis = "";
+    String application = "";
     String updateTime="";
     String other="";
     String isCodeUpload = "false";

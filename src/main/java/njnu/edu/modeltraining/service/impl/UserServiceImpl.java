@@ -71,6 +71,7 @@ public class UserServiceImpl implements UserService {
             Map<String, String> map = new HashMap<>();
             map.put("name", user.getName());
             map.put("teamId", user.getTeamId());
+            map.put("memberId", user.getMemberId());
             result.add(map);
         }
         return result;

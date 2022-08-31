@@ -6,10 +6,7 @@ import njnu.edu.modeltraining.common.auth.AuthCheck;
 import njnu.edu.modeltraining.common.resolver.JwtTokenParser;
 import njnu.edu.modeltraining.common.result.JsonResult;
 import njnu.edu.modeltraining.common.result.ResultUtils;
-import njnu.edu.modeltraining.pojo.support.Description;
-import njnu.edu.modeltraining.pojo.support.Method;
-import njnu.edu.modeltraining.pojo.support.Result;
-import njnu.edu.modeltraining.pojo.support.Summary;
+import njnu.edu.modeltraining.pojo.support.*;
 import njnu.edu.modeltraining.pojo.support.method.ComputeResource;
 import njnu.edu.modeltraining.pojo.support.method.DataResource;
 import njnu.edu.modeltraining.pojo.support.method.ModelResource;
@@ -20,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,14 +41,23 @@ public class ApplyHomeworkController {
     public JsonResult getByTeamId(@JwtTokenParser("teamId") String teamId) {
         return ResultUtils.success(applyHomeworkService.getByTeamId(teamId));
     }
-
+    @AuthCheck
+    @RequestMapping(value = "/getById", method = RequestMethod.PATCH)
+    public JsonResult getById( @JwtTokenParser("id") String id) {
+        return ResultUtils.success(applyHomeworkService.getById(id));
+    }
     @AuthCheck
     @RequestMapping(value = "/saveDescription/{id}", method = RequestMethod.PATCH)
     public JsonResult saveDescription(@RequestBody Description description, @PathVariable String id) {
         applyHomeworkService.saveDescription(id, description);
         return ResultUtils.success();
     }
-
+    @AuthCheck
+    @RequestMapping(value = "/saveTopic/{id}", method = RequestMethod.PATCH)
+    public JsonResult saveTopic(@RequestBody Topic topic, @PathVariable String id) {
+        applyHomeworkService.saveTopic(id, topic);
+        return ResultUtils.success();
+    }
     @AuthCheck
     @RequestMapping(value = "/saveProcess/{id}", method = RequestMethod.PATCH)
     public JsonResult saveProcess(@RequestBody JSONArray jsonArray, @PathVariable String id) {
@@ -269,16 +276,22 @@ public class ApplyHomeworkController {
     @AuthCheck
     @RequestMapping(value = "/mergeProcessFiles/{id}", method = RequestMethod.POST)
     public JsonResult mergeProcessFile(@RequestBody JSONObject jsonObject, @PathVariable String id) {
-        Process process = jsonObject.getObject("process",Process.class);
         String uuid = jsonObject.getString("uuid");
         String name = jsonObject.getString("name");
         int total = jsonObject.getIntValue("total");
-        return ResultUtils.success(applyHomeworkService.mergeProcessFiles(id,process, uuid, total, name));
+        return ResultUtils.success(applyHomeworkService.mergeProcessFiles(id, uuid, total, name));
     }
     @AuthCheck
     @RequestMapping(value = "/removeProcessFile/{id}", method = RequestMethod.DELETE)
     public JsonResult removeProcessFile(@PathVariable String id,@RequestBody Process process) {
         applyHomeworkService.removeProcessFile(id,process);
+        return ResultUtils.success();
+    }
+    @AuthCheck
+    @RequestMapping(value = "/removeTempVideoFile/{id}", method = RequestMethod.DELETE)
+    public JsonResult removeTempVideoFile(@PathVariable String id,@RequestBody JSONObject jsonObject) {
+        String uuid = jsonObject.getString("uuid");
+        applyHomeworkService.removeTempVideoFile(id,uuid);
         return ResultUtils.success();
     }
     @AuthCheck
@@ -316,5 +329,9 @@ public class ApplyHomeworkController {
     public JsonResult deleteresultVisualizationStorage(@PathVariable String id) {
         applyHomeworkService.deleteresultVisualizationStorage(id);
         return ResultUtils.success();
+    }
+    @RequestMapping(value = "/download/{name}/{id}", method = RequestMethod.GET)
+    public void download(@PathVariable String name,@PathVariable String id, HttpServletResponse response) {
+        applyHomeworkService.download(name,id , response);
     }
 }

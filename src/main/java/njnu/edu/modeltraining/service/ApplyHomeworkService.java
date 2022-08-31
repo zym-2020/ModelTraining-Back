@@ -1,10 +1,7 @@
 package njnu.edu.modeltraining.service;
 
 import njnu.edu.modeltraining.pojo.ApplyHomework;
-import njnu.edu.modeltraining.pojo.support.Description;
-import njnu.edu.modeltraining.pojo.support.Method;
-import njnu.edu.modeltraining.pojo.support.Result;
-import njnu.edu.modeltraining.pojo.support.Summary;
+import njnu.edu.modeltraining.pojo.support.*;
 import njnu.edu.modeltraining.pojo.support.method.ComputeResource;
 import njnu.edu.modeltraining.pojo.support.method.DataResource;
 import njnu.edu.modeltraining.pojo.support.method.ModelResource;
@@ -12,6 +9,7 @@ import njnu.edu.modeltraining.pojo.support.method.Process;
 import njnu.edu.modeltraining.pojo.support.researcher.Person;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -23,7 +21,7 @@ import java.util.List;
  */
 public interface ApplyHomeworkService {
     ApplyHomework getByTeamId(String teamId);
-
+    ApplyHomework getById(String id);
     void saveDescription(String id, Description description);
 
     void saveProcess(String id, List<Process> processes);
@@ -74,7 +72,7 @@ public interface ApplyHomeworkService {
     void removeResultVisualizationFile(String id);
     String mergeConclusionFiles(String id,String uuid, int total, String name);
     void removeConclusionFile(String id);
-    String mergeProcessFiles(String id,Process process,String uuid, int total, String name);
+    String mergeProcessFiles(String id,String uuid, int total, String name);
     void removeProcessFile(String id,Process process);
 
     int getProcessLength(String id);
@@ -88,4 +86,12 @@ public interface ApplyHomeworkService {
     void deleteresultVisualizationStorage(String id);
 
     void deleteModelcodeContent(String id, ModelResource modelResource);
+
+    void download(String name, String id, HttpServletResponse response);
+
+    void removeTempVideoFile(String id, String uuid);
+
+    void saveTopic(String id, Topic topic);
+
+
 }
