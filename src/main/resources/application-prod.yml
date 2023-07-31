@@ -1,29 +1,2 @@
-spring:
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017/model
-  redis:
-    host: localhost
-    port: 6379
-    password:
-    timeout: 3000ms
-    #配置letture
-    lettuce:
-      pool:
-        min-idle: 1 #最小空闲连接
-        max-idle: 6 #最大空闲连接
-        max-active: 10  #最大连接数
-        max-wait: 1000ms  #最大阻塞时间
-        shutdown-timeout: 200ms
 
-
-
-uploadAddress:
-  /home/zym/homework/upload/
-tempAddress:
-  /home/zym/homework/temp/
-homeworkAddress:
-  /home/zym/homework/upload/homework/
-certificateAddress:
-  /home/zym/homework/upload/certificate/
 

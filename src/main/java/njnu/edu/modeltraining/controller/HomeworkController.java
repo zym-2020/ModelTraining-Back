@@ -1,6 +1,5 @@
 package njnu.edu.modeltraining.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import njnu.edu.modeltraining.common.auth.AuthCheck;
 import njnu.edu.modeltraining.common.resolver.JwtTokenParser;
 import njnu.edu.modeltraining.common.result.JsonResult;
@@ -10,13 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created with IntelliJ IDEA.
  *
  * @Author: Yiming
- * @Date: 2022/07/24/16:25
+ * @Date: 2023/07/31/19:10
  * @Description:
  */
 @RestController
@@ -26,54 +26,15 @@ public class HomeworkController {
     HomeworkService homeworkService;
 
     @AuthCheck
-    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-    public JsonResult uploadFile(@RequestParam MultipartFile file, @RequestParam String number, @RequestParam String name, @JwtTokenParser("memberId") String memberId) {
-        homeworkService.uploadFile(file, number, name, memberId);
+    @RequestMapping(value = "/uploadHomework", method = RequestMethod.POST)
+    public JsonResult uploadHomework(@RequestParam MultipartFile file, @RequestParam String type, @JwtTokenParser("email") String email) {
+        homeworkService.uploadHomework(file, type, email);
         return ResultUtils.success();
     }
 
-    @AuthCheck
-    @RequestMapping(value = "/mergeFiles", method = RequestMethod.POST)
-    public JsonResult mergeFile(@RequestBody JSONObject jsonObject, @JwtTokenParser("memberId") String memberId) {
-        String number = jsonObject.getString("number");
-        String name = jsonObject.getString("name");
-        int total = jsonObject.getIntValue("total");
-        return ResultUtils.success(homeworkService.mergeFiles(memberId, number, total, name));
+    @RequestMapping(value = "/downloadHomework/{fileName}", method = RequestMethod.GET)
+    public void downloadHomework(@PathVariable String fileName, HttpServletResponse response) {
+        homeworkService.downloadHomework(fileName, response);
     }
 
-    @AuthCheck
-    @RequestMapping(value = "/checkState/{uuid}", method = RequestMethod.GET)
-    public JsonResult checkState(@PathVariable String uuid) {
-        return ResultUtils.success(homeworkService.checkState(uuid));
-    }
-
-    @AuthCheck
-    @RequestMapping(value = "/clearTemp/{number}", method = RequestMethod.POST)
-    public JsonResult clearTemp(@PathVariable String number, @JwtTokenParser("memberId") String memberId) {
-        homeworkService.clearTemp(memberId, number);
-        return ResultUtils.success();
-    }
-
-    @AuthCheck
-    @RequestMapping(value = "/getHomework", method = RequestMethod.GET)
-    public JsonResult getHomework(@JwtTokenParser("memberId") String memberId) {
-        return ResultUtils.success(homeworkService.getHomework(memberId));
-    }
-
-    @RequestMapping(value = "/download/{memberId}/{number}", method = RequestMethod.GET)
-    public void download(@PathVariable String number, @PathVariable String memberId, HttpServletResponse response) {
-        homeworkService.download(memberId, number, response);
-    }
-
-    @RequestMapping(value = "/removeFile/{number}", method = RequestMethod.DELETE)
-    public JsonResult removeFile(@PathVariable String number, @JwtTokenParser("memberId") String memberId) {
-        homeworkService.removeFile(memberId, number);
-        return ResultUtils.success();
-    }
-
-    @RequestMapping(value = "/commit/{number}", method = RequestMethod.PATCH)
-    public JsonResult commit(@PathVariable String number, @JwtTokenParser("memberId") String memberId) {
-        homeworkService.commit(memberId, number);
-        return ResultUtils.success();
-    }
 }

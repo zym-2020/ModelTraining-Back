@@ -1,6 +1,5 @@
 package njnu.edu.modeltraining.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import njnu.edu.modeltraining.common.auth.AuthCheck;
 import njnu.edu.modeltraining.common.resolver.JwtTokenParser;
 import njnu.edu.modeltraining.common.result.JsonResult;
@@ -13,14 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created with IntelliJ IDEA.
  *
  * @Author: Yiming
- * @Date: 2022/06/23/16:37
+ * @Date: 2023/07/31/18:59
  * @Description:
  */
 @RestController
@@ -30,32 +26,13 @@ public class UserController {
     UserService userService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public JsonResult login(@RequestBody JSONObject jsonObject) {
-        return ResultUtils.success(userService.login(jsonObject.getString("email"), jsonObject.getString("name")));
+    public JsonResult login(@RequestBody User user) {
+        return ResultUtils.success(userService.login(user));
     }
-
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public JsonResult register(@RequestBody User user) {
-        userService.addUser(user);
-        return ResultUtils.success();
-    }
-
 
     @AuthCheck
     @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
-    public JsonResult getUserInfo(@JwtTokenParser("teamId") String teamId, @JwtTokenParser("name") String name, @JwtTokenParser("memberId") String memberId, @JwtTokenParser("email") String email) {
-        Map<String, String> map = new HashMap<>();
-        map.put("teamId", teamId);
-        map.put("name", name);
-        map.put("memberId", memberId);
-        map.put("email", email);
-        return ResultUtils.success(map);
+    public JsonResult getUserInfo(@JwtTokenParser("email") String email) {
+        return ResultUtils.success(userService.getUserInfo(email));
     }
-
-    @AuthCheck
-    @RequestMapping(value = "/getTeamInfo", method = RequestMethod.GET)
-    public JsonResult getTeamInfo(@JwtTokenParser("teamId") String teamId) {
-        return ResultUtils.success(userService.getTeamInfo(teamId));
-    }
-
 }
