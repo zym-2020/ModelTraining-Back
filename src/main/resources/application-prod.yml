@@ -1,2 +1,16 @@
 
 
+<<<<<<< HEAD
+=======
+
+uploadAddress:
+  /home/zym/homework/upload/
+tempAddress:
+  /home/zym/homework/temp/
+homeworkAddress:
+  /home/zym/homework/upload/homework/
+certificateAddress:
+  /home/zym/homework/upload/certificate/
+videoAddress:
+  /home/zym/homework/upload/video/
+>>>>>>> 95814b06042be9c12210933f271c0490e660c321
