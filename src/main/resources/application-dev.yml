@@ -6,17 +6,6 @@ spring:
 
 
 uploadAddress:
-<<<<<<< HEAD
   D:/zhuomian/homework/upload/homework/
-
-=======
-  D:\zhuomian\homework\upload\
-tempAddress:
-  D:\zhuomian\homework\temp\
-homeworkAddress:
-  D:\zhuomian\homework\upload\homework\
-videoAddress:
-  D:\zhuomian\homework\upload\video\
->>>>>>> 95814b06042be9c12210933f271c0490e660c321
 certificateAddress:
   D:/zhuomian/homework/upload/certificate/
